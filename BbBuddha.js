@@ -109,7 +109,7 @@ BbBuddha.prototype.startVideo = function() {
     var state  = player.getPlayerState();   //state 1 == playing
 
     if (1 != state) {
-        var vol = Math.floor(Math.random()*100);
+        var vol = 10 + Math.floor(Math.random() * 90);
         player.setVolume(vol);
         player.playVideo();
         this.numPlaying++;
