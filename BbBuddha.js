@@ -81,6 +81,11 @@ BbBuddha.prototype.pause = function() {
     $('#controls').removeClass('playing');
 }
 
+BbBuddha.prototype.stop = function () {
+    clearInterval(this.timer);
+    $('#controls').removeClass('playing');
+}
+
 // pickVideo()
 //______________________________________________________________________________
 BbBuddha.prototype.pickVideo = function () {

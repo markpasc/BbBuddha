@@ -22,10 +22,10 @@ body {
     width:  220px;
 }
 
-#pauseButton, #loading, .playing #playButton, .loading #playButton {
+#pauseButton, #stopButton, #loading, .playing #playButton, .loading #playButton, .loading #stopButton {
     display: none;
 }
 
-#playButton, .loading #loading, .playing #pauseButton {
+#playButton, .loading #loading, .playing #pauseButton, .playing #stopButton {
     display: inline;
 }
