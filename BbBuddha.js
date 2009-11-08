@@ -1,6 +1,13 @@
 //Copyright(c)2009 tikirobot.net Software license AGPL version 3.
 //inspired by the magical http://inbflat.net
 
+// Array Remove - By John Resig (MIT Licensed)
+function arrayremove(array, from, to) {
+    var rest = array.slice((to || from) + 1 || array.length);
+    array.length = from < 0 ? array.length + from : from;
+    return array.push.apply(array, rest);
+}
+
 // BbBuddha()
 //______________________________________________________________________________
 function BbBuddha() {
@@ -10,6 +17,8 @@ function BbBuddha() {
     this.numLoaded  = 0;
     this.maxPlaying = 6;
     this.isPlaying  = false;
+
+    this.playFirst = [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11];  // skip 8
 }
 
 // init()
@@ -61,13 +70,24 @@ BbBuddha.prototype.stop = function() {
 // pickVideo()
 //______________________________________________________________________________
 BbBuddha.prototype.pickVideo = function () {
-    var vidNum = Math.floor(Math.random() * 12);
+    var vidNum;
 
+    if (this.playFirst.length) {
+        var i = Math.floor(Math.random() * this.playFirst.length);
+        vidNum = this.playFirst[i];
+        arrayremove(this.playFirst, i);
+        return vidNum;
+    }
+
+    vidNum = Math.floor(Math.random() * 12);
     if (8 == vidNum) { // special case for spoken word
         // I love the spoken word piece, but if I leave this
         // playing all day, I hear it too often
         var rand  = Math.random();
-        if (rand > 0.25) return;
+        if (rand > 0.25) {
+            //console.log('Picked video 8 but skipping it');
+            return;
+        }
     }
 
     return vidNum;
@@ -81,7 +101,8 @@ BbBuddha.prototype.startVideo = function() {
         return;
     }
     var vidNum = this.pickVideo();
-    if (vidNum === null) {
+    //console.log('picked video ' + vidNum);
+    if (vidNum == undefined) {
         return;
     }
 
