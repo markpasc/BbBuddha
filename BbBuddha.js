@@ -17,8 +17,8 @@ function BbBuddha() {
 BbBuddha.prototype.init = function() {
     //console.log('init BbBuddha');
 
-    for (var i=0; i<12; i++) {        
-        $('#myytplayer'+i).get(0).addEventListener('onStateChange', 'stateChange');        
+    for (var i=0; i<12; i++) {
+        $('#myytplayer'+i).get(0).addEventListener('onStateChange', 'stateChange');
     }
 
     $('#loading').hide();
@@ -27,7 +27,7 @@ BbBuddha.prototype.init = function() {
 }
 
 // start()
-//______________________________________________________________________________                   
+//______________________________________________________________________________
 BbBuddha.prototype.start = function() {
     var self   = this;
     this.startVideo();
@@ -40,9 +40,9 @@ BbBuddha.prototype.start = function() {
 //______________________________________________________________________________
 BbBuddha.prototype.toggle = function() {
     if (this.isPlaying) {
-	this.stop();
+        this.stop();
     } else {
-	this.start();
+        this.start();
     }
 }
 
@@ -50,8 +50,8 @@ BbBuddha.prototype.toggle = function() {
 //______________________________________________________________________________
 BbBuddha.prototype.stop = function() {
     clearInterval(this.timer);
-    for (var i=0; i<12; i++) {        
-        $('#myytplayer'+i).get(0).pauseVideo();        
+    for (var i=0; i<12; i++) {
+        $('#myytplayer'+i).get(0).pauseVideo();
     }
     this.isPlaying = false;
     this.numPlaying = 0;
@@ -63,22 +63,22 @@ BbBuddha.prototype.stop = function() {
 //______________________________________________________________________________
 BbBuddha.prototype.startVideo = function() {
     if (this.numPlaying >= this.maxPlaying) {
-	//console.log('numPlaying = ' + this.numPlaying + ', returning');
-	return;
+        //console.log('numPlaying = ' + this.numPlaying + ', returning');
+        return;
     }
     var vidNum =Math.floor(Math.random()*12);
     var player = $('#myytplayer'+vidNum).get(0);
     var state  = player.getPlayerState();   //state 1 == playing
 
     if (8 == vidNum) { //special case for spoken word
-	// I love the spoken word piece, but if I leave this
-	// playing all day, I hear it too often
-	var rand   = Math.random();
-	if (rand > 0.25) return;
+        // I love the spoken word piece, but if I leave this
+        // playing all day, I hear it too often
+        var rand   = Math.random();
+        if (rand > 0.25) return;
     }
 
     if (1 != state) {
-	var vol =Math.floor(Math.random()*100);
+        var vol =Math.floor(Math.random()*100);
         player.setVolume(vol);
         player.playVideo();
         this.numPlaying++;
@@ -98,7 +98,7 @@ function onYouTubePlayerReady(playerid) {
     buddha.numLoaded++;
     $('#numLoaded').text(buddha.numLoaded);
     //console.log(playerid + ' is ready');
-    
+
     if (12 == buddha.numLoaded) {
         buddha.init();
     }
@@ -116,19 +116,19 @@ function onYouTubePlayerReady(playerid) {
 function stateChange(newState) {
 
     if (0 == newState) { //some video stopped playing, update numPlaying
-	var numPlaying = 0;
-	var i;
-	for (i=0; i<12; i++) {
-	    var player = $('#myytplayer'+i).get(0);
-	    var state  = player.getPlayerState();   //state 1 == playing
-	    if (1 == state) {
-		numPlaying++;
-	    }
-	}
+        var numPlaying = 0;
+        var i;
+        for (i=0; i<12; i++) {
+            var player = $('#myytplayer'+i).get(0);
+            var state  = player.getPlayerState();   //state 1 == playing
+            if (1 == state) {
+                numPlaying++;
+            }
+        }
 
 
-	buddha.numPlaying = numPlaying;
+        buddha.numPlaying = numPlaying;
 
-	//console.log('numPlaying = ' + numPlaying);
+        //console.log('numPlaying = ' + numPlaying);
     }
 }
