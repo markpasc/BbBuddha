@@ -58,6 +58,20 @@ BbBuddha.prototype.stop = function() {
     $('#playButton').text('Start AutoPlay')
 }
 
+// pickVideo()
+//______________________________________________________________________________
+BbBuddha.prototype.pickVideo = function () {
+    var vidNum = Math.floor(Math.random() * 12);
+
+    if (8 == vidNum) { // special case for spoken word
+        // I love the spoken word piece, but if I leave this
+        // playing all day, I hear it too often
+        var rand  = Math.random();
+        if (rand > 0.25) return;
+    }
+
+    return vidNum;
+}
 
 // startVideo()
 //______________________________________________________________________________
@@ -66,16 +80,13 @@ BbBuddha.prototype.startVideo = function() {
         //console.log('numPlaying = ' + this.numPlaying + ', returning');
         return;
     }
-    var vidNum =Math.floor(Math.random()*12);
+    var vidNum = this.pickVideo();
+    if (vidNum === null) {
+        return;
+    }
+
     var player = $('#myytplayer'+vidNum).get(0);
     var state  = player.getPlayerState();   //state 1 == playing
-
-    if (8 == vidNum) { //special case for spoken word
-        // I love the spoken word piece, but if I leave this
-        // playing all day, I hear it too often
-        var rand   = Math.random();
-        if (rand > 0.25) return;
-    }
 
     if (1 != state) {
         var vol =Math.floor(Math.random()*100);
