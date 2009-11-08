@@ -40,7 +40,7 @@ BbBuddha.prototype.init = function() {
 BbBuddha.prototype.start = function() {
     var self   = this;
     this.startVideo();
-    this.timer = setInterval(function(){ self.startVideo() }, 5000);
+    this.timer = setInterval(function(){ self.startVideo() }, 20000);
     this.isPlaying = true;
     $('#playButton').text('Stop AutoPlay')
 }
