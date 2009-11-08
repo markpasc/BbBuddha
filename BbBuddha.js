@@ -30,8 +30,7 @@ BbBuddha.prototype.init = function() {
         $('#myytplayer'+i).get(0).addEventListener('onStateChange', 'stateChange');
     }
 
-    $('#loading').hide();
-    $('#playButton').show();
+    $('#controls').removeClass('loading');
     this.start();
 }
 
@@ -39,32 +38,31 @@ BbBuddha.prototype.init = function() {
 //______________________________________________________________________________
 BbBuddha.prototype.start = function() {
     var self   = this;
-    this.startVideo();
     this.timer = setInterval(function(){ self.startVideo() }, 20000);
     this.isPlaying = true;
-    $('#playButton').text('Stop AutoPlay')
+    $('#controls').addClass('playing');
 }
 
 // toggle()
 //______________________________________________________________________________
 BbBuddha.prototype.toggle = function() {
     if (this.isPlaying) {
-        this.stop();
+        this.pause();
     } else {
         this.start();
     }
 }
 
-// stop()
+// pause()
 //______________________________________________________________________________
-BbBuddha.prototype.stop = function() {
+BbBuddha.prototype.pause = function() {
     clearInterval(this.timer);
     for (var i=0; i<12; i++) {
         $('#myytplayer'+i).get(0).pauseVideo();
     }
     this.isPlaying = false;
     this.numPlaying = 0;
-    $('#playButton').text('Start AutoPlay')
+    $('#controls').removeClass('playing');
 }
 
 // pickVideo()
