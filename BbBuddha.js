@@ -72,13 +72,21 @@ BbBuddha.prototype.stop = function() {
 BbBuddha.prototype.pickVideo = function () {
     var vidNum;
 
-    if (this.playFirst.length) {
+    // First, play all the musical phrases at random without replacement.
+    if (this.playFirst && this.playFirst.length) {
         var i = Math.floor(Math.random() * this.playFirst.length);
         vidNum = this.playFirst[i];
         arrayremove(this.playFirst, i);
         return vidNum;
     }
+    // Then play the spoken word piece.
+    else if (this.playFirst) {
+        this.playFirst = null;
+        return 8;
+    }
 
+    // Then just pick one at random (with replacement), skipping the
+    // spoken word phrase most of the time.
     vidNum = Math.floor(Math.random() * 12);
     if (8 == vidNum) { // special case for spoken word
         // I love the spoken word piece, but if I leave this
