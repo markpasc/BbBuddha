@@ -17,6 +17,7 @@ function BbBuddha() {
     this.numLoaded  = 0;
     this.maxPlaying = 6;
     this.isPlaying  = false;
+    this.paused = [];
 
     this.playFirst = [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11];  // skip 8
 }
@@ -38,6 +39,17 @@ BbBuddha.prototype.init = function() {
 //______________________________________________________________________________
 BbBuddha.prototype.start = function() {
     var self   = this;
+
+    if (this.paused.length) {
+        $.each(this.paused, function (i, data) {
+            $('#myytplayer'+data).get(0).playVideo();
+        });
+        this.paused = [];
+    }
+    else {
+        this.startVideo();
+    }
+
     this.timer = setInterval(function(){ self.startVideo() }, 20000);
     this.isPlaying = true;
     $('#controls').addClass('playing');
@@ -58,7 +70,11 @@ BbBuddha.prototype.toggle = function() {
 BbBuddha.prototype.pause = function() {
     clearInterval(this.timer);
     for (var i=0; i<12; i++) {
-        $('#myytplayer'+i).get(0).pauseVideo();
+        var player = $('#myytplayer'+i).get(0);
+        if (player.getPlayerState() == 1) {
+            player.pauseVideo();
+            this.paused.push(i);
+        }
     }
     this.isPlaying = false;
     this.numPlaying = 0;
