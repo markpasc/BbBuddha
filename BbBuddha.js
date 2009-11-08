@@ -40,7 +40,7 @@ BbBuddha.prototype.init = function() {
 BbBuddha.prototype.start = function() {
     var self   = this;
     this.startVideo();
-    this.timer = setInterval(function(){self.startVideo()}, 5000);
+    this.timer = setInterval(function(){ self.startVideo() }, 5000);
     this.isPlaying = true;
     $('#playButton').text('Stop AutoPlay')
 }
@@ -83,8 +83,7 @@ BbBuddha.prototype.pickVideo = function () {
     if (8 == vidNum) { // special case for spoken word
         // I love the spoken word piece, but if I leave this
         // playing all day, I hear it too often
-        var rand  = Math.random();
-        if (rand > 0.25) {
+        if (Math.random() > 0.25) {
             //console.log('Picked video 8 but skipping it');
             return;
         }
@@ -110,7 +109,7 @@ BbBuddha.prototype.startVideo = function() {
     var state  = player.getPlayerState();   //state 1 == playing
 
     if (1 != state) {
-        var vol =Math.floor(Math.random()*100);
+        var vol = Math.floor(Math.random()*100);
         player.setVolume(vol);
         player.playVideo();
         this.numPlaying++;
