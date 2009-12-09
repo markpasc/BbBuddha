@@ -83,6 +83,7 @@ BbBuddha.prototype.pause = function() {
 
 BbBuddha.prototype.stop = function () {
     clearInterval(this.timer);
+    this.isPlaying = false;
     $('#controls').removeClass('playing');
 }
 
